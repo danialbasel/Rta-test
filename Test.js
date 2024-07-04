@@ -15,8 +15,8 @@
             marginBottom: '40px',
             border: '2px lightgrey solid',
             padding: '15px',
-        }); 
-        
+        });
+
         var questionDiv = document.createElement('div');
         Object.assign(questionDiv.style, {
             display: 'flex',
@@ -37,6 +37,7 @@
         fullDiv.append(questionDiv);
         answers.forEach(item => {
             var answerDiv = document.createElement('div');
+            answerDiv.classList.add('question' + question.nid);
             Object.assign(answerDiv.style, {
                 display: 'flex',
                 justifyContent: 'center',
@@ -68,18 +69,24 @@
             answerTextDiv.append(answerItem);
             answerTextDiv.append(answerText);
             answerDiv.append(answerTextDiv);
-            answerDiv.onclick = function () { answerClicked(this, question, item) }
+            answerDiv.onclick = function () { answerClicked(this, question, item, 'question' + question.nid) }
             fullDiv.append(answerDiv);
         })
         mainDiv.append(fullDiv);
     })
 
 
-    function answerClicked(answerDiv, question, option) {
+    function answerClicked(answerDiv, question, option,className) {
         if (question.answer == option) {
             answerDiv.style.backgroundColor = 'green';
         } else {
             answerDiv.style.backgroundColor = 'red';
+        }
+        var answers = document.getElementsByClassName(className);
+        for (let i = 0; i < answers.length; i++) {
+            Object.assign(answers[i].style, {
+               pointerEvents: 'none'
+            });
         }
     }
 })();
